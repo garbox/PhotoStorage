@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photo Folders</title>
     <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('storage/css/bootstrap5.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
     <style>
         /* Custom styling for the folder cards */
         .folder-card {
@@ -42,17 +43,18 @@
     </style>
 </head>
 <body>
-<x-side-nav/>
-
-    <div class="container my-5">
+<x-home-nav/>
+    <div class="container mt-5 mb-3">
         <h1 class="text-center mb-4">Photo Folders</h1>
         <!-- Add Folder Button -->
         <div class="text-center">
-          <button class="btn btn-outline-primary add-folder-btn mb-3">
-              <i class="bi bi-folder-plus"></i> Add Folder
-          </button>
-      </div>
-      
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                <i class="bi bi-folder-plus"></i> Add Folder
+            </button>
+        </div>
+    </div>
+    <div class="container">
         <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
             <!-- Folder Card 1 -->
             @foreach ($folders as $folder)
@@ -65,7 +67,7 @@
                             <h5 class="card-title">{{$folder['folder_name']}}</h5>
                             <p class="card-text">{{$folder['folder_description']}}</p>
                             <!-- Edit Icon -->
-                            <i class="bi bi-pencil edit-icon" onclick="editFolder('{{$folder['folder_name']}}')"></i>
+                            <i class="bi bi-pencil edit-icon" onclick="editFolder('{{$folder['id']}}')"></i>
                         </div>
                     </div>
                 </div>
@@ -73,10 +75,44 @@
         </div>
     </div>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="{{route('folder.create')}}" method="post">
+            @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Folder</h5>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <label class="form-label" for="folderName">Folder Name</label>
+                    <input class="form-control" type="text" name="folderName" id="folerName" required>
+                    @error('folderName')
+                        <div style="color: red;">{{ $message }}</div>
+                    @enderror
+                    <label class="form-label" for="description">Description</label>
+                    <input class="form-control" type="text" name="description" id="description">
+                    @error('description')
+                        <div style="color: red;">{{ $message }}</div>
+                    @enderror
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Add Folder</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
     <!-- Bootstrap 5 JS and icons -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Bootstrap Icons CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    
     
     <script>
         // Function to handle folder editing
@@ -86,7 +122,7 @@
         }
 
         function FolderClicked(folderId) {
-            window.open("{{url('folder')}}" + "/" + folderId);
+            window.location.replace("{{url('folder')}}" + "/" + folderId);
         }
     </script>
 </body>

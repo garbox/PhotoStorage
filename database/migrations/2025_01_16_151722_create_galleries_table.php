@@ -12,10 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('folders', function (Blueprint $table) {
+        Schema::create('galleries', function (Blueprint $table) {
             $table->id();
-            $table->string('folder_name');
-            $table->string('folder_description');
+            $table->string('gallery_name');
+            $table->string('gallery_description')->default(Null);
             $table->foreignIdFor(User::class)->refrecnes('id')->on('users');
             $table->timestamps();
         });

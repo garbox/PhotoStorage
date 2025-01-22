@@ -6,23 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use LaravelQRCode\Facades\QRCode;
 use App\Models\Photo;
+use Illuminate\Support\Facades\Auth;
 
 class PhotoController extends Controller
 {
-    public function index($session = null){
-        // Get the session ID
-        if($session !== null){
-            session()->setId($session);
-        }
-        else{
-            session()->getId();
-        }
-
-        //get photos if any
-        $photosData = Photo::where('session_id', session()->getId())->get();
-
-        // Redirect to another route and append session ID as a query parameter
-        return view('upload', ['photos' => $photosData]);
+    public function index(int $galleryId, int $userId){
+        return view('upload', ['galleryId' => $galleryId, 'userId' => $userId]);
     }
     
     public function upload(Request $request){
@@ -30,6 +19,8 @@ class PhotoController extends Controller
         $request->validate([
             'photos' => 'required|array',
             'photos.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5000',
+            'galleryId' => 'integer|nullable',
+            'userId' => 'integer|nullable',
             ], 
             [
                 'photos.required' => 'A photo is required.',
@@ -37,6 +28,15 @@ class PhotoController extends Controller
                 'photos.mimes' => 'The image must be a JPEG, PNG, JPG, or GIF.',
                 'photos.max' => 'The image must not be greater than 5MB.',
             ]);
+
+            //set folder and user ID 
+            if($request->userId != null){
+                $userId = $request->userId;
+            }
+            else{
+                $userId = Auth::user()->id;
+            }
+
             $uploadedFiles = $request->file('photos');
             foreach ($uploadedFiles as $file) {
                 // Store each file in a folder (e.g., 'photos')
@@ -45,19 +45,15 @@ class PhotoController extends Controller
                 Photo::insert([
                     'session_id' => session()->getId(),
                     'filename' => $file->hashName(),
-                    'user_id' => 1,
-                    'folder_id' => 1,
+                    'user_id' => $userId,
+                    'gallery_id' => $request->galleryId,
                 ]);
             } 
             return back()->with('success', 'Photo uploaded successfully');     
     }
 
-    public function getPhotoAsync(){
-        // Get photos by session ID
-        $photos = Photo::where('session_id', session()->getId())->get();
-
-        // Return the photos as a JSON response
-        return response()->json($photos);
+    public function photoDisplay(int $photoId){
+        return view ('photo', ['photo' => Photo::find($photoId)]);
     }
 }
 

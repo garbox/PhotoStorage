@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Photo extends Model
 {
     // store photo info on server to pull via Async
-    public function photoUplaod(){
-
+    public function store(){
+        
     }
 
-    public static function photosByFolder(int $folderId){
-        return Photo::where("folder_id", $folderId)->get();
+    public static function photosByGallery(int $galleryId){
+        return Photo::where("gallery_id", $galleryId)->get();
     }
 }
