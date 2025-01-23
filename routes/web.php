@@ -11,6 +11,8 @@ Route::get('/', function () {
 });
 
 Route::get('mobile/{userId}/{folderId}', [PhotoController::class, 'index'])->name('mobile');
+// Needs improvement for security API token maybe? 
+Route::post('mobile/photo/upload', [PhotoController::class, 'upload'])->name('mobile.photo.upload');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [GalleryController::class, 'index'])->name('dashboard');

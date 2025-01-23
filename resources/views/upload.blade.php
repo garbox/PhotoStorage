@@ -1,4 +1,3 @@
-@dump(session()->getId())
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,7 +28,7 @@
                 <div class="upload-container">
                     <h2 class="text-center mb-4">Upload Your Photo</h2>
 
-                    <form action="/photo" method="post">
+                    <form action="mobile/photo/upload" method="post">
                         @csrf
                         <div class="mb-3">
                             <label for="photos" class="form-label">Select Photo</label>
