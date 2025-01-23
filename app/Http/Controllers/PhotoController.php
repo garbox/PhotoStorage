@@ -16,7 +16,6 @@ class PhotoController extends Controller
     }
     
     public function upload(Request $request){
-        dump($request);
         // Validate the uploaded file
         $request->validate([
             'photos' => 'required|array',
