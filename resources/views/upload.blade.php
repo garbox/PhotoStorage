@@ -34,7 +34,7 @@
                             <label for="photos" class="form-label">Select Photo</label>
                             <input type="file" name="photos[]" id="photos" multiple required>
                             <input type="hidden" name="galleryId" value="{{$galleryId}}">
-                            <input type="hidden" name="folderId" value="{{$userId}}">
+                            <input type="hidden" name="userId" value="{{$userId}}">
                             <div class="form-text">Max file size: 5MB. Supported formats: JPG, PNG, JPEG.</div>
                         </div>
 
