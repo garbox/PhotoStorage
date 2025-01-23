@@ -10,7 +10,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('mobile/{userId}/{folderId}', [PhotoController::class, 'index'])->name('mobile.upload');
+Route::get('mobile/{userId}/{folderId}/{session}', [PhotoController::class, 'index'])->name('mobile');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [GalleryController::class, 'index'])->name('dashboard');

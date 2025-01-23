@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class PhotoController extends Controller
 {
-    public function index(int $galleryId, int $userId){
+    public function index(int $galleryId, int $userId, string $session){
+        session()->setId($session);
         return view('upload', ['galleryId' => $galleryId, 'userId' => $userId]);
     }
     
