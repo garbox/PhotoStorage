@@ -28,7 +28,7 @@
                 <div class="upload-container">
                     <h2 class="text-center mb-4">Upload Your Photo</h2>
 
-                    <form action="mobile/photo/upload" method="post">
+                    <form action="{{route("mobile.photo.upload")}}" method="post">
                         @csrf
                         <div class="mb-3">
                             <label for="photos" class="form-label">Select Photo</label>
