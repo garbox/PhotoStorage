@@ -6,7 +6,7 @@
     <title>Account Creation</title>
 
     <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('storage/css/bootstrap.min.css') }}">
 </head>
 <body class="d-flex flex-column min-vh-100">
 <x-home-nav/>

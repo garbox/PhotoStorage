@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Photo Storage Gallery</title>
   <!-- Bootstrap 5 CDN -->
-  <link rel="stylesheet" href="{{ asset('storage/css/bootstrap5.css') }}">
+  <link rel="stylesheet" href="{{ asset('storage/css/bootstrap.min.css') }}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <style>
     /* Styling for the side menu */
@@ -97,11 +97,6 @@
         <div class="col" style="width: 18rem;">
           <div class="card" >
             <a href="{{url('photo/'. $photo['id'])}}"><img src="{{asset('storage/photos/'.$photo->filename)}}" class="card-img-top"></a>
-            <div class="card-body">
-              <button class="btn btn-outline-primary">
-                <i class="bi bi-download"></i>
-              </button>
-            </div>
           </div>
         </div>
         @endforeach

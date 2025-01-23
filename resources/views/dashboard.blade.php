@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photo Folders</title>
     <!-- Bootstrap 5 CSS -->
-    <link rel="stylesheet" href="{{ asset('storage/css/bootstrap5.css') }}">
+    <link rel="stylesheet" href="{{ asset('storage/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
     <style>
         /* Custom styling for the folder cards */
@@ -21,7 +21,7 @@
 
         .folder-icon {
             font-size: 48px;
-            color: #007bff;
+            color:rgba(26, 26, 26, 0.60);
         }
 
         /* Style for the edit icon */
@@ -30,47 +30,47 @@
             top: 10px;
             right: 10px;
             font-size: 18px;
-            color: #007bff;
+            color:rgba(26, 26, 26, 0.60);
             cursor: pointer;
-        }
-        .add-folder-btn {
-            font-size: 24px;
-            color: #007bff;
-            cursor: pointer;
-            margin-bottom: 20px;
         }
         
     </style>
 </head>
 <body>
 <x-home-nav/>
-    <div class="container mt-5 mb-3">
+    <div class="container-fluid mt-5 mb-3 bg-secondary">
         <h1 class="text-center mb-4">Photo Galleries</h1>
         <!-- Add Folder Button -->
         <div class="text-center">
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
                 <i class="bi bi-folder-plus"></i> Add Gallery
             </button>
         </div>
+        <hr>
     </div>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
             <!-- Folder Card 1 -->
             @foreach ($galleries as $gallery)
-                <div class="col" onclick='FolderClicked({{$gallery['id']}})'>
-                    <div class="card folder-card shadow">
-                        <div class="card-body text-center">
-                            <div class="folder-icon mb-3">
-                                <i class="bi bi-folder"></i> <!-- Using Bootstrap Icons for folder icon -->
-                            </div>
-                            <h5 class="card-title">{{$gallery['gallery_name']}}</h5>
-                            <p class="card-text">{{$gallery['gallery_description']}}</p>
-                            <!-- Edit Icon -->
-                            <i class="bi bi-pencil edit-icon" onclick="editFolder('{{$gallery['id']}}')"></i>
+            <div class="col">
+                <!-- Card Container -->
+                <div class="card folder-card shadow mb-4" onclick="FolderClicked({{$gallery['id']}})">
+                    <!-- Card Header with Edit Icon -->
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">{{$gallery['gallery_name']}}</h5>
+                        <i class="bi bi-pencil edit-icon" onclick="editFolder('{{$gallery['id']}}')" style="cursor: pointer;"></i>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body text-center">
+                        <!-- Folder Icon -->
+                        <div class="folder-icon mb-3">
+                            <i class="bi bi-folder" style="font-size: 40px;"></i> <!-- Using Bootstrap Icons for folder icon -->
                         </div>
+                        <p class="card-text">{{$gallery['gallery_description']}}</p>
                     </div>
                 </div>
+            </div>
             @endforeach
         </div>
     </div>
@@ -122,7 +122,7 @@
         }
 
         function FolderClicked(galleryId) {
-            window.location.replace("{{url('gallery')}}" + "/" + galleryId);
+            window.location.assign  ("{{url('gallery')}}" + "/" + galleryId);
         }
     </script>
 </body>

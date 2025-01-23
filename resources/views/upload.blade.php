@@ -7,7 +7,7 @@
     <title>Photo Upload Page</title>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{ asset('storage/css/bootstrap5.css') }}">
+    <link rel="stylesheet" href="{{ asset('storage/css/bootstrap.min.css') }}">
 
     <style>
         .upload-container {

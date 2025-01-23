@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photo Folders</title>
     <!-- Bootstrap 5 CSS -->
-    <link rel="stylesheet" href="{{ asset('storage/css/bootstrap5.css') }}">
+    <link rel="stylesheet" href="{{ asset('storage/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
     <style>
         /* Custom styling for the folder cards */
