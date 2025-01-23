@@ -82,7 +82,7 @@
     <div class="qr-code-container">
       <h4 class="text-center">Photo on your phone? Scan Here!</h4>
       <div>
-        {{ QRCode::url(url("/mobile/" . Auth::user()->id ."/". $gallery->id ."/". session()->getId()))->setsize(6)->svg() }}
+        {{ QRCode::url(url("/mobile/" . Auth::user()->id ."/". $gallery->id))->setsize(6)->svg() }}
       </div>
     </div>
   </div>
