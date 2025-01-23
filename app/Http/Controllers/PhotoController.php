@@ -31,7 +31,7 @@ class PhotoController extends Controller
             ]);
 
             //set folder and user ID 
-            if($request->userId != null){
+            if($request->userId !== null){
                 $userId = $request->userId;
             }
             else{
