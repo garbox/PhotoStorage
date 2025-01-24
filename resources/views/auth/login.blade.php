@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account Creation</title>
+    <title>Login</title>
 
     <!-- Bootstrap 5 CSS -->
     <link rel="stylesheet" href="{{ asset('storage/css/bootstrap.min.css') }}">
@@ -24,6 +24,11 @@
                     @if (session('status'))
                         <div class="alert alert-success">
                             {{ session('status') }}
+                        </div>
+                    @endif
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
                         </div>
                     @endif
                 </div>

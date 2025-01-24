@@ -27,9 +27,9 @@
         /* Style for the edit icon */
         .edit-icon {
             position: absolute;
-            top: 10px;
+            top: 5px;
             right: 10px;
-            font-size: 18px;
+            font-size: 20px;
             color:rgba(26, 26, 26, 0.60);
             cursor: pointer;
         }
@@ -55,19 +55,21 @@
             @foreach ($galleries as $gallery)
             <div class="col">
                 <!-- Card Container -->
-                <div class="card folder-card shadow mb-4" onclick="FolderClicked({{$gallery['id']}})">
+                <div class="card folder-card shadow mb-4">
                     <!-- Card Header with Edit Icon -->
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">{{$gallery['gallery_name']}}</h5>
-                        <i class="bi bi-pencil edit-icon" onclick="editFolder('{{$gallery['id']}}')" style="cursor: pointer;"></i>
+                        <!-- Title (This will be turned into an input field) -->
+                        <h5 class="mb-0" id="gallery-name">{{$gallery['gallery_name']}}</h5>
+                        <i class="bi bi-pencil edit-icon" onclick="editFolder(this, '{{$gallery['id']}}')" style="cursor: pointer;"></i>
                     </div>
                     <!-- Card Body -->
                     <div class="card-body text-center">
                         <!-- Folder Icon -->
-                        <div class="folder-icon mb-3">
+                        <div class="folder-icon mb-3" onclick="FolderClicked({{$gallery['id']}})">
                             <i class="bi bi-folder" style="font-size: 40px;"></i> <!-- Using Bootstrap Icons for folder icon -->
                         </div>
-                        <p class="card-text">{{$gallery['gallery_description']}}</p>
+                        <!-- Description (This will also be turned into a textarea) -->
+                        <p class="card-text" id="gallery-description">{{$gallery['gallery_description']}}</p>
                     </div>
                 </div>
             </div>
@@ -116,9 +118,25 @@
     
     <script>
         // Function to handle folder editing
-        function editFolder(folderName) {
-            alert("You are editing the folder: " + folderName);
-            // You can replace this alert with a modal or editing functionality as needed
+        function editFolder(element, galleryId) {
+            // Get the parent container (card header or card body)
+            let cardHeader = element.closest('.card-header');
+            let cardText = element.parentElement.parentElement.querySelector('p.card-text');
+
+            // Get the title and description elements
+            let titleElement = cardHeader.querySelector('h5');
+
+            // Replace the title <h5> with an <input> field
+            let titleText = titleElement.innerText; // Save the current title text
+            titleElement.innerHTML = `<input type="text" value="${titleText}" id="edit-title" class="form-control">`;
+
+            // Replace the description <p> with a <textarea>
+            cardText.innerHTML = `<textarea id="edit-description" class="form-control">${cardText.innerText}</textarea>`;
+
+            // Change the pencil icon to a save icon
+            element.classList.remove('bi-pencil');
+            element.classList.add('bi-save');
+            element.setAttribute('onclick', `saveFolder(this, '${galleryId}')`);
         }
 
         function FolderClicked(galleryId) {
