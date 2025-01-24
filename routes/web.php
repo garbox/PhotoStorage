@@ -10,8 +10,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('mobile/{userId}/{folderId}', [PhotoController::class, 'index'])->name('mobile');
-// Needs improvement for security API token maybe? 
+Route::get('mobile/{userId}/{folderId}/{qrToken}', [PhotoController::class, 'index'])->name('mobile');
+
 Route::post('mobile/photo/upload', [PhotoController::class, 'upload'])->name('mobile.photo.upload');
 
 Route::middleware('auth')->group(function () {
