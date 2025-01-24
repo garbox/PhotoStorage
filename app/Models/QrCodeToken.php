@@ -20,8 +20,8 @@ class QrcodeToken extends Model
         return $qrToken;
     }
 
-    public static function checkToken(string $qrToken){
-        $tokenSet = QrcodeToken::where('token', $qrToken)->get();
+    public static function checkToken(string $qrToken, int $userId){
+        $tokenSet = QrcodeToken::where('token', $qrToken)->where("user_id", $userId)->get();
         if(!$tokenSet->isEmpty()){
             return true;
         }

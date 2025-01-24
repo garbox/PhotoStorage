@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Auth;
 
 class PhotoController extends Controller
 {
-    public function index(int $galleryId, int $userId, string $qrToken){
-        if(QrcodeToken::checkToken($qrToken)){
+    public function index(int $userId, int $galleryId, string $qrToken){
+        if(QrcodeToken::checkToken($qrToken, $userId)){
             session()->regenerate();
             return view('upload', ['galleryId' => $galleryId, 'userId' => $userId]);
         }
