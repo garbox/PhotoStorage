@@ -8,25 +8,21 @@ use Illuminate\Support\Facades\Auth;
 
 class QrcodeToken extends Model
 {
-    //create and store token for cross platform validation.
+    protected $fillable = ['token', 'user_id'];
+
+    // Create and store token for cross-platform validation
     public static function createToken(){
         $qrToken = Str::random(32);
-        
-        QrcodeToken::insert([
-            "token" => $qrToken,
-            "user_id" => Auth::user()->id,
-        ]);
 
-        return $qrToken;
+        return self::create([
+            'token' => $qrToken,
+            'user_id' => Auth::id(), // Prevents error if user is not logged in
+        ])->token;
     }
 
-    public static function checkToken(string $qrToken, int $userId){
-        $tokenSet = QrcodeToken::where('token', $qrToken)->where("user_id", $userId)->get();
-        if(!$tokenSet->isEmpty()){
-            return true;
-        }
-        else{
-            return false;
-        }
+    public static function checkToken(string $qrToken, int $userId): bool{
+        return self::where('token', $qrToken)
+            ->where('user_id', $userId)
+            ->exists(); // More efficient than get()->isEmpty()
     }
 }
