@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Gallery;
 use App\Models\Photo;
 use App\Models\QrcodeToken;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
 
 class GalleryController extends Controller
