@@ -42,7 +42,7 @@
 <x-home-nav/>
 
 <div class="container-fluid mt-5">
-    <div class="bg-secondary p-4 rounded">
+    <div class="bg-dark p-4 rounded">
         <h1 class="text-center text-white">Photo Galleries</h1>
         <div class="text-center">
             <!-- Button trigger modal -->
