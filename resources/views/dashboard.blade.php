@@ -42,7 +42,7 @@
 <x-home-nav/>
 
 <div class="container-full border-top">
-    <div class="bg-dark">
+    <div class="bg-dark p-4">
         <h1 class="text-center text-white">Photo Galleries</h1>
         <div class="text-center">
             <!-- Button trigger modal -->
