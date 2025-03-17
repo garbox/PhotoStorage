@@ -2,6 +2,7 @@
     <div class="card-body">
         <div class="section-divider">
             <h5>Change Password</h5>
+            <hr>
             <div class="mb-3">
                 <label for="currentPassword" class="form-label">Current Password</label>
                 <input type="password" class="form-control" id="currentPassword" placeholder="Enter current password">

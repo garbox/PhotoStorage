@@ -9,7 +9,9 @@ use App\Models\Photo;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('/test-error', function () {
+    abort(403);
+});
 Route::get('mobile/{userId}/{folderId}/{qrToken}', [PhotoController::class, 'index'])->name('mobile');
 
 Route::post('mobile/photo/upload', [PhotoController::class, 'upload'])->name('mobile.photo.upload');
@@ -23,7 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/photo/{photoId}', [PhotoController::class, 'photoDisplay'])->name('photo.get');
     Route::post('/photo', [PhotoController::class, 'upload'])->name('photo.upload');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 

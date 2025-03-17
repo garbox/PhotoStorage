@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use LaravelQRCode\Facades\QRCode;
 use App\Models\Photo;
+use App\Models\StorageAllowance;
 use App\Models\QrcodeToken;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,11 +21,11 @@ class PhotoController extends Controller
             session()->flash('error', 'Invalid Token, refresh gallery and try QR code again.');
             return view('auth.login');
         }
-        
     }
     
     public function upload(Request $request){
         // Validate the uploaded file
+        $size = 0;
         $request->validate([
             'photos' => 'required|array',
             'photos.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5000',
@@ -45,11 +46,12 @@ class PhotoController extends Controller
             else{
                 $userId = Auth::user()->id;
             }
-            $size = 0;
+            $storeageInfo = StorageAllowance::storageInfo($userId);
+            $size = $storeageInfo->storage_used;
             foreach ($request->file('photos') as $file) {
                 // Get file size
                 // Store each file in a folder (e.g., 'photos')
-                $size = $size + $file->getSize();
+                
                 $file->store('photos', 'public');
                 
         
@@ -57,9 +59,14 @@ class PhotoController extends Controller
                     'filename' => $file->hashName(),
                     'user_id' => $userId,
                     'gallery_id' => $request->galleryId,
-                    "size_mb" => $file->getSize()/1000000,
+                    "size_mb" => $file->getSize()/100000,
                 ]);
-            } 
+                //update size
+                $size = $size + $file->getSize()/100000;
+            }             
+            $size = $size + $storeageInfo->used;
+            StorageAllowance::updateUsed($userId, $size);
+
             return back()->with('success', 'Photo uploaded successfully');     
     }
 

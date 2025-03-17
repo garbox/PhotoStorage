@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Models\StorageAllowance;
 
 class RegisteredUserController extends Controller
 {
@@ -44,6 +45,11 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+
+        StorageAllowance::insert([
+            "user_id" => Auth::user()->id,
+            "storage_allowed" => 15000,
+        ]);
 
         return redirect(route('dashboard', absolute: false));
     }

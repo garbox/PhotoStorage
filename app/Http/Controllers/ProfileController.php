@@ -8,24 +8,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\StorageAllowance;
+use Illuminate\Support\Collection;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
-    public function edit(Request $request): View
-    {
-        return view('profile.edit2', [
-            'user' => $request->user(),
+
+    public function index(){
+        $storageModel = StorageAllowance::storageInfo(Auth::user()->id);
+        $storage = collect([
+            "used" => $storageModel->storage_used /1000,
+            "allowed" =>$storageModel->storage_allowed /1000,
+            "leftPercent" => number_format($storageModel->storage_used/$storageModel->storage_allowed,2)*100,
+            'remaning' => ($storageModel->storage_allowed - $storageModel->storage_used)/1000,
         ]);
+        return view('profile.edit2', ['storage' => $storage]);
     }
 
-    /**
-     * Update the user's profile information.
-     */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
+    public function update(ProfileUpdateRequest $request): RedirectResponse{
         $request->user()->fill($request->validated());
 
         if ($request->user()->isDirty('email')) {
@@ -37,11 +37,7 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
-    {
+    public function destroy(Request $request): RedirectResponse{
         $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current_password'],
         ]);

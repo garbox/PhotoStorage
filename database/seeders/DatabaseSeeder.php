@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(Gallery::class);
         $this->call(Users::class);
+        $this->call(Storage::class);
     }
 }
