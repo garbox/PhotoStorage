@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('qrcode_tokens', function (Blueprint $table) {
+        Schema::create('qr_token_codes', function (Blueprint $table) {
             $table->id();
             $table->string('token');
             $table->foreignIdFor(User::class)->refrecnes('id')->on('users')->default(1);
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('qrcode_tokens');
+        Schema::dropIfExists('qr_token_codes');
     }
 };

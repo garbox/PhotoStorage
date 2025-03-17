@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
-class QrcodeToken extends Model
+class QrTokenCode extends Model
 {
     protected $fillable = ['token', 'user_id'];
 

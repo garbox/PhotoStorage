@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Gallery;
 use App\Models\Photo;
-use App\Models\QrcodeToken;
+use App\Models\QrTokenCode;
 use Illuminate\Support\Facades\Auth;
 
 class GalleryController extends Controller
@@ -28,7 +28,7 @@ class GalleryController extends Controller
     public function get(int $galleryId){
         $galleryContents = Photo::photosByGallery($galleryId);
         $gallery = Gallery::find($galleryId);
-        $qrCodeToken = QrcodeToken::createToken();
+        $qrCodeToken = QrTokenCode::createToken();
         return view('gallery', ['contents' => $galleryContents, 'gallery' => $gallery, "qrToken" => $qrCodeToken]);
     }
 }
