@@ -3,17 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use LaravelQRCode\Facades\QRCode;
 use App\Models\Photo;
 use App\Models\StorageAllowance;
-use App\Models\QrcodeToken;
+use App\Models\QrTokenCode;
 use Illuminate\Support\Facades\Auth;
 
 class PhotoController extends Controller
 {
     public function index(int $userId, int $galleryId, string $qrToken){
-        if(QrcodeToken::checkToken($qrToken, $userId)){
+        if(QrTokenCode::checkToken($qrToken, $userId)){
             session()->regenerate();
             return view('upload', ['galleryId' => $galleryId, 'userId' => $userId]);
         }
