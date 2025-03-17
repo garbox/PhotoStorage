@@ -28,7 +28,7 @@ class GalleryController extends Controller
     public function get(int $galleryId){
         $galleryContents = Photo::photosByGallery($galleryId);
         $gallery = Gallery::find($galleryId);
-        //$qrCodeToken = QrcodeToken::createToken();
+        $qrCodeToken = QrcodeToken::createToken();
         return view('gallery', ['contents' => $galleryContents, 'gallery' => $gallery, "qrToken" => $qrCodeToken]);
     }
 }
